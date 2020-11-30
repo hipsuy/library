@@ -7,14 +7,13 @@
 <body>
 
     <button class='newBook'>+ NEW BOOK</button>
-
+    <br><br>
     <div class = 'content'>
 
     </div>
     
 <script>
-
-//ON POINT 4, HAVE TO MAKE SURE THAT BOOKS DON'T GET ADDED MULTIPLE TIMES WHEN i click on new book button, since the adding function runs at the end of it
+//START FROM POINT 6
     let myLibrary = [new Book('bojack','marlo','2223','3'),new Book('shari potter','jk bowlings','45','45'),new Book('2 state','cheytan pagat','415','25'),new Book('rich anna poor anna','ching chong','394','0')];
 
     function Book(title,author,pages,read){
@@ -22,6 +21,7 @@
         this.author = author;
         this.pages = pages;
         this.read = read;
+        this.displayed = false;
         this.info = function(){
             let x = this.title + ' by ' + this.author + ', ' + this.pages + ' pages' + ', ';
             if(this.read == true){
@@ -45,15 +45,32 @@
         const content = document.querySelector('.content');
         
         for (book in myLibrary) {
-            
+            if(myLibrary[book].displayed == false){
             const element = document.createElement('p');
+            const butt = document.createElement('button');
+            element.classList.add(`p${book}`);
+            butt.classList.add(`b${book}`);
+            butt.dataset.index = book;
+            butt.textContent = '-';
+            butt.addEventListener('click',function(){
+                delete myLibrary[butt.dataset.index];
+                const delEl = content.querySelector(`.p${butt.dataset.index}`);
+                const delButt = content.querySelector(`.b${butt.dataset.index}`);
+                content.removeChild(delEl);
+                content.removeChild(delButt);
+            });
+            content.appendChild(butt);
             element.textContent = `${myLibrary[book].title}
             __Author: ${myLibrary[book].author}
             __Total Pages: ${myLibrary[book].pages}
             __Page Read: ${myLibrary[book].read}`;
             element.classList.add('book');
             content.appendChild(element);
+            myLibrary[book].displayed = true;
+            }
+            
         }
+        
         
     }
 
