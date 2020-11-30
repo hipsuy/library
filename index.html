@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
+        <link rel="stylesheet" href="styles.css">
     </head>
 
 <body>
+
+    <button class='newBook'>+ NEW BOOK</button>
+
+    <div class = 'content'>
+
+    </div>
     
 <script>
+
+//ON POINT 4, HAVE TO MAKE SURE THAT BOOKS DON'T GET ADDED MULTIPLE TIMES WHEN i click on new book button, since the adding function runs at the end of it
+    let myLibrary = [new Book('bojack','marlo','2223','3'),new Book('shari potter','jk bowlings','45','45'),new Book('2 state','cheytan pagat','415','25'),new Book('rich anna poor anna','ching chong','394','0')];
+
     function Book(title,author,pages,read){
         this.title = title;
         this.author = author;
@@ -21,6 +31,35 @@
             }
         }
     }
+
+    function addBookToLibrary(){
+        let title = prompt('Title: ');
+        let author = prompt('Author: ');
+        let pages = prompt('Total pages: ');
+        let read = prompt('Pages read: ');
+        myLibrary.push(new Book(title,author,pages,read));
+        displayBooks();
+    }
+
+    function displayBooks(){
+        const content = document.querySelector('.content');
+        
+        for (book in myLibrary) {
+            
+            const element = document.createElement('p');
+            element.textContent = `${myLibrary[book].title}
+            __Author: ${myLibrary[book].author}
+            __Total Pages: ${myLibrary[book].pages}
+            __Page Read: ${myLibrary[book].read}`;
+            element.classList.add('book');
+            content.appendChild(element);
+        }
+        
+    }
+
+    const newBook = document.querySelector('.newBook');
+    newBook.addEventListener('click',addBookToLibrary);
+    displayBooks();
 
 </script>
 
