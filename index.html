@@ -14,7 +14,7 @@
     
 <script>
 //WORK ON THE changeStatus method and the website is done!!
-    let myLibrary = [new Book('bojack','marlo','2223','3'),new Book('shari potter','jk bowlings','45','45'),new Book('2 state','cheytan pagat','415','25'),new Book('rich anna poor anna','ching chong','394','0')];
+    let myLibrary = [];
 
     function Book(title,author,pages,read){
         this.title = title;
@@ -30,18 +30,20 @@
                 return x + 'not read yet';
             }
         }
-        this.changeStatus = function(){
-           /*
-            //this.read = prompt('How many pages have your read?');
+        
+    }
+
+    Book.prototype.changeStatus = function(){
+            
+            myLibrary[this.dataset.index].read = prompt('How many pages have your read?');
             for(book in myLibrary){
                 myLibrary[book].displayed = false;
             }
             const content = document.querySelector('.content');
-            //content.innerHTML = '';
+            content.innerHTML = '';
             displayBooks();
-            */
+        
         }
-    }
 
     function addBookToLibrary(){
         let title = prompt('Title: ');
@@ -72,7 +74,8 @@
             br4.classList.add(`br4${book}`);
             butt.classList.add(`b${book}`);
             butt.dataset.index = book;
-            butt.textContent = '-Remove';
+            butt.textContent = '- REMOVE';
+            statusChange.dataset.index = book;
             statusChange.textContent = 'Change Status';
             butt.addEventListener('click',function(){
                 delete myLibrary[butt.dataset.index];
@@ -92,7 +95,7 @@
                 content.removeChild(delBr4);
             });
 
-            statusChange.addEventListener('click',myLibrary[book].changeStatus());
+            statusChange.addEventListener('click',myLibrary[book].changeStatus);
 
             content.appendChild(butt);
             element.textContent = `Title:${myLibrary[book].title}
