@@ -6,14 +6,14 @@
 
 <body>
 
-    <button class='newBook'>+ NEW BOOK</button>
-    <br><br>
+    <center><button class='newBook'>+ NEW BOOK</button></center>
+    <br><br><br><br>
     <div class = 'content'>
 
     </div>
     
 <script>
-//START FROM POINT 6
+//WORK ON THE changeStatus method and the website is done!!
     let myLibrary = [new Book('bojack','marlo','2223','3'),new Book('shari potter','jk bowlings','45','45'),new Book('2 state','cheytan pagat','415','25'),new Book('rich anna poor anna','ching chong','394','0')];
 
     function Book(title,author,pages,read){
@@ -29,6 +29,17 @@
             }else{
                 return x + 'not read yet';
             }
+        }
+        this.changeStatus = function(){
+           /*
+            //this.read = prompt('How many pages have your read?');
+            for(book in myLibrary){
+                myLibrary[book].displayed = false;
+            }
+            const content = document.querySelector('.content');
+            //content.innerHTML = '';
+            displayBooks();
+            */
         }
     }
 
@@ -48,24 +59,53 @@
             if(myLibrary[book].displayed == false){
             const element = document.createElement('p');
             const butt = document.createElement('button');
+            const statusChange = document.createElement('button');
+            const br1 = document.createElement('br');
+            const br2 = document.createElement('br');
+            const br3 = document.createElement('br');
+            const br4 = document.createElement('br');
+            statusChange.classList.add(`s${book}`);
             element.classList.add(`p${book}`);
+            br1.classList.add(`br1${book}`);
+            br2.classList.add(`br2${book}`);
+            br3.classList.add(`br3${book}`);
+            br4.classList.add(`br4${book}`);
             butt.classList.add(`b${book}`);
             butt.dataset.index = book;
-            butt.textContent = '-';
+            butt.textContent = '-Remove';
+            statusChange.textContent = 'Change Status';
             butt.addEventListener('click',function(){
                 delete myLibrary[butt.dataset.index];
                 const delEl = content.querySelector(`.p${butt.dataset.index}`);
                 const delButt = content.querySelector(`.b${butt.dataset.index}`);
+                const delStatusChange = content.querySelector(`.s${butt.dataset.index}`);
+                const delBr1 = content.querySelector(`.br1${butt.dataset.index}`);
+                const delBr2 = content.querySelector(`.br2${butt.dataset.index}`);
+                const delBr3 = content.querySelector(`.br3${butt.dataset.index}`);
+                const delBr4 = content.querySelector(`.br4${butt.dataset.index}`);
                 content.removeChild(delEl);
                 content.removeChild(delButt);
+                content.removeChild(delStatusChange);
+                content.removeChild(delBr1);
+                content.removeChild(delBr2);
+                content.removeChild(delBr3);
+                content.removeChild(delBr4);
             });
+
+            statusChange.addEventListener('click',myLibrary[book].changeStatus());
+
             content.appendChild(butt);
-            element.textContent = `${myLibrary[book].title}
-            __Author: ${myLibrary[book].author}
-            __Total Pages: ${myLibrary[book].pages}
-            __Page Read: ${myLibrary[book].read}`;
+            element.textContent = `Title:${myLibrary[book].title}
+            ____Author: ${myLibrary[book].author}
+            ____Total Pages: ${myLibrary[book].pages}
+            ____Pages Read: ${myLibrary[book].read}`;
             element.classList.add('book');
             content.appendChild(element);
+            content.appendChild(statusChange);
+            content.appendChild(br1);
+            content.appendChild(br2);
+            content.appendChild(br3);
+            content.appendChild(br4);
             myLibrary[book].displayed = true;
             }
             
